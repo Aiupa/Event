@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Event;
+use App\Entity\Booking;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -12,11 +12,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 
 
-class EventCrudController extends AbstractCrudController
+class BookingCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Event::class;
+        return Booking::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -25,11 +25,11 @@ class EventCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             AssociationField::new('type', 'Type'),
             AssociationField::new('staff', 'Référent'),
-            IntegerField::new('Public', 'Nombre de personnes'),
+            IntegerField::new('Public', 'Public'),
             DateTimeField::new('beginAt', 'Début de l\'évenement'),
             DateTimeField::new('endAt', 'Fin de l\'évenement'),
-            AssociationField::new('room', 'Salle pour l\'événement'),
-            TextEditorField::new('text', 'Description de l\'événement')
+            AssociationField::new('room', 'Salle'),
+            TextEditorField::new('text', 'Déroulé')
         ];
     }
 }

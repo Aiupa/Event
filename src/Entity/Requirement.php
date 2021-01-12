@@ -25,9 +25,9 @@ class Requirement
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="requirement")
+     * @ORM\ManyToMany(targetEntity=Booking::class, mappedBy="requirement")
      */
-    private $events;
+    private $bookings;
 
     public function __toString()
     {
@@ -36,7 +36,7 @@ class Requirement
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,27 +57,27 @@ class Requirement
     }
 
     /**
-     * @return Collection|Event[]
+     * @return Collection|Booking[]
      */
-    public function getEvents(): Collection
+    public function getbookings(): Collection
     {
-        return $this->events;
+        return $this->bookings;
     }
 
-    public function addEvent(Event $event): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->addRequirement($this);
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->addRequirement($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeBooking(Booking $booking): self
     {
-        if ($this->events->removeElement($event)) {
-            $event->removeRequirement($this);
+        if ($this->bookings->removeElement($booking)) {
+            $booking->removeRequirement($this);
         }
 
         return $this;

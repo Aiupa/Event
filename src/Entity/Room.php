@@ -30,9 +30,9 @@ class Room
     private $capacity;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="room")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="room")
      */
-    private $events;
+    private $bookings;
 
     public function __toString()
     {
@@ -41,7 +41,7 @@ class Room
     
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,29 +74,29 @@ class Room
     }
 
     /**
-     * @return Collection|Event[]
+     * @return Collection|Booking[]
      */
-    public function getEvents(): Collection
+    public function getBookings(): Collection
     {
-        return $this->events;
+        return $this->bookings;
     }
 
-    public function addEvent(Event $event): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setRoom($this);
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeBooking(Booking $booking): self
     {
-        if ($this->events->removeElement($event)) {
+        if ($this->bookings->removeElement($booking)) {
             // set the owning side to null (unless already changed)
-            if ($event->getRoom() === $this) {
-                $event->setRoom(null);
+            if ($booking->getRoom() === $this) {
+                $booking->setRoom(null);
             }
         }
 

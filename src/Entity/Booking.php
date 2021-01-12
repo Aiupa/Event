@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\EventRepository;
+use App\Repository\BookingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * @ORM\Entity(repositoryClass=EventRepository::class)
+ * @ORM\Entity(repositoryClass=BookingRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("slug")
  */
-class Event
+class Booking
 {
     /**
      * @ORM\Id
@@ -45,7 +49,7 @@ class Event
     private $text;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -55,22 +59,22 @@ class Event
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Requirement::class, inversedBy="events")
+     * @ORM\ManyToMany(targetEntity=Requirement::class, inversedBy="bookings")
      */
     private $requirement;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="events")
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="bookings")
      */
     private $room;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="events")
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="bookings")
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="events")
+     * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="bookings")
      */
     private $staff;
 
@@ -82,6 +86,21 @@ class Event
     public function __construct()
     {
         $this->requirement = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if (!$this->slug || '-' === $this->slug) {
+            $this->slug = (string) $slugger->slug((string) $this)->lower();
+        }
     }
 
     public function getId(): ?int

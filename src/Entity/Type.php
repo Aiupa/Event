@@ -25,9 +25,9 @@ class Type
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="type")
      */
-    private $events;
+    private $bookings;
 
     public function __toString()
     {
@@ -36,7 +36,7 @@ class Type
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,29 +57,29 @@ class Type
     }
 
     /**
-     * @return Collection|Event[]
+     * @return Collection|Booking[]
      */
-    public function getEvents(): Collection
+    public function getBookings(): Collection
     {
-        return $this->events;
+        return $this->bookings;
     }
 
-    public function addEvent(Event $event): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setType($this);
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setType($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeBooking(Booking $booking): self
     {
-        if ($this->events->removeElement($event)) {
+        if ($this->bookings->removeElement($booking)) {
             // set the owning side to null (unless already changed)
-            if ($event->getType() === $this) {
-                $event->setType(null);
+            if ($booking->getType() === $this) {
+                $booking->setType(null);
             }
         }
 

@@ -40,9 +40,9 @@ class Staff
     private $mail;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="staff")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="staff")
      */
-    private $events;
+    private $bookings;
 
     public function __toString()
     {
@@ -51,7 +51,7 @@ class Staff
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,29 +108,29 @@ class Staff
     }
 
     /**
-     * @return Collection|Event[]
+     * @return Collection|Booking[]
      */
-    public function getEvents(): Collection
+    public function getBookings(): Collection
     {
-        return $this->events;
+        return $this->bookings;
     }
 
-    public function addEvent(Event $event): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setStaff($this);
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setStaff($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeBooking(Booking $booking): self
     {
-        if ($this->events->removeElement($event)) {
+        if ($this->bookings->removeElement($booking)) {
             // set the owning side to null (unless already changed)
-            if ($event->getStaff() === $this) {
-                $event->setStaff(null);
+            if ($booking->getStaff() === $this) {
+                $booking->setStaff(null);
             }
         }
 
