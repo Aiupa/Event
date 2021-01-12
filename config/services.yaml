@@ -34,3 +34,5 @@ services:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Booking'}
             - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Booking'}
 
+    App\EventSubscriber\CalendarSubscriber:
+
