@@ -1,4 +1,5 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_widget(form) }}
+    <a class="btn btn-secondary" href="{{ path('booking_index') }}">Retour à la liste</a>
+    <button class="btn btn-primary">{{ button_label|default('Valider la création') }}</button>
 {{ form_end(form) }}

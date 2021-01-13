@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('booking_delete', {'id': booking.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('booking_delete', {'id': booking.id}) }}" onsubmit="return confirm('Souhaitez-vous vraiment supprimer cet événement?');">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ booking.id) }}">
-    <button class="btn">Delete</button>
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ booking.slug) }}">
+    <button class="btn list-group-item list-group-item-danger">Supprimer l'événement</button>
 </form>
