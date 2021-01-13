@@ -43,8 +43,7 @@ class CalendarSubscriber implements EventSubscriberInterface
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
             ->setParameter('end', $end->format('Y-m-d H:i:s'))
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
 
         foreach ($bookings as $booking) {
             // this create the events with your data (here booking data) to fill calendar

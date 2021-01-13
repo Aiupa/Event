@@ -16,12 +16,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookingController extends AbstractController
 {
     /**
+     * @Route("/index", name="booking_index", methods={"GET"})
+     */
+    public function index(BookingRepository $bookingRepository): Response
+    {
+        return $this->render('booking/index.html.twig', [
+            'bookings' => $bookingRepository
+        ]);
+    }
+
+
+    /**
      * @Route("/calendar", name="booking_calendar", methods={"GET"})
      */
     public function calendar(): Response
     {
         return $this->render('booking/calendar.html.twig');
     }
+
 
     /**
      * @Route("/new", name="booking_new", methods={"GET","POST"})
@@ -47,7 +59,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="booking_show", methods={"GET"})
+     * @Route("/{slug}", name="booking_show", methods={"GET"})
      */
     public function show(Booking $booking): Response
     {
@@ -57,7 +69,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="booking_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="booking_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Booking $booking): Response
     {
@@ -77,7 +89,7 @@ class BookingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="booking_delete", methods={"DELETE"})
+     * @Route("/{slug}", name="booking_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Booking $booking): Response
     {

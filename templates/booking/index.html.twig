@@ -1,47 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Booking index{% endblock %}
+{% block title %}Événement{% endblock %}
 
 {% block body %}
-    <h1>Booking index</h1>
 
-    <table class="table">
-        <thead>
+    <h1>Liste des événements à venir</h1>
+    <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Public</th>
-                <th>BeginAt</th>
-                <th>EndAt</th>
-                <th>Text</th>
-                <th>Slug</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
+                <th scope="col">Type</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Nombre de personnes</th>
+                <th scope="col">Début de l'événement</thscope="col">
+                <th scope="col">Fin de l'événement</th>
+                <th scope="col">Liens</th>
             </tr>
         </thead>
         <tbody>
         {% for booking in bookings %}
             <tr>
-                <td>{{ booking.id }}</td>
+                <td>{{ booking.type }}</td>
                 <td>{{ booking.title }}</td>
                 <td>{{ booking.public }}</td>
-                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.text }}</td>
-                <td>{{ booking.slug }}</td>
-                <td>{{ booking.createdAt ? booking.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.beginAt ? booking.beginAt|date('d M y - H:i') : '' }}</td>
+                <td>{{ booking.endAt ? booking.endAt|date('d M y - H:i') : '' }}</td>
                 <td>
-                    <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>
-                    <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+                    <a class="link" href="{{ path('booking_show', {'id': booking.id}) }}">Détails</a> - 
+                    <a class="link" href="{{ path('booking_edit', {'id': booking.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="10">Aucun événement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('booking_new') }}">Create new</a>
+    <ul class="list-group list-group-horizontal">
+    <li class="list-group-item list-group-item-dark"><a class="link" href="{{ path('booking_new') }}">Créer un nouvel événement</a></li>
+    <li class="list-group-item list-group-item-dark"><a class="link" href="{{ path('booking_calendar') }}">Jeter un oeil au calendrier</a></li>
+    </ul>
+    
 {% endblock %}
